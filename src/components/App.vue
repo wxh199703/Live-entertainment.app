@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>这是App组件</h1>
+        <p></p>
     </div>
 </template>
 
