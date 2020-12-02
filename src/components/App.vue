@@ -6,8 +6,11 @@
             </p>
         </mt-header>
 
-
+		<transition>
+		
         <router-view></router-view>
+
+		</transition>
         
         <!-- 底部选项卡 -->
         <nav class="mui-bar mui-bar-tab">
@@ -41,6 +44,31 @@ export default {
 
 <style lang="scss" scope>
     .app-container {
-        padding-top: 40px;
+        padding: 40px 0 50px 0;
+
+		overflow: hidden;
     }
+
+	.v-enter {
+		opacity: 0;
+
+		transform: translateX(100%);
+	}
+
+	.mint-header {
+		z-index: 2;
+	}
+
+	.v-leave {
+		opacity: 0;
+
+		transform: translateX( -100% );
+
+		position: absolute;
+	}
+
+	.v-enter-active,
+	.v-leave-active {
+		transition: all 0.4s ease;
+	}
 </style>
