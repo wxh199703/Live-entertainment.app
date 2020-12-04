@@ -9,6 +9,11 @@ import 'mint-ui/lib/style.css'
 
 Vue.use(MintUI)
 
+//全局配置vue-preview
+import VuePreview from 'vue-preview'
+ 
+
+Vue.use(VuePreview)
 
 
 //配置Mui
