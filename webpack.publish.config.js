@@ -25,7 +25,7 @@ module.exports= {
 
     entry: {
         app: path.join(__dirname, './src/main.js'),
-        vendors: ['jquery', 'bootstrap', 'mint-ui']
+        vendors: ['vue', 'vuex', 'vue-router', 'axios', 'mint-ui', 'vue-preview']
     },
 
 
@@ -109,7 +109,7 @@ module.exports= {
 
 
 
-        new optimizeCSSAssetsWebpackPlugin()
+        // new optimizeCSSAssetsWebpackPlugin()
     ],
 
     module: {
@@ -169,7 +169,9 @@ module.exports= {
             
 
 
-            {         test: /\.vue$/, use: 'vue-loader'}
+            {         test: /\.vue$/, use: 'vue-loader'},
+
+            {   test: /\.(ttf|eot|svg|woff|woff2)/, use: 'url-loader'},
         ]
     }
 }

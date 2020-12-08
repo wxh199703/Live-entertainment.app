@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <mt-header fixed title="生活娱乐">
-            <p slot="left">
+            <p slot="left" @click="space" v-show="flag">
                 <mt-button icon="back">返回</mt-button>
             </p>
         </mt-header>
@@ -23,7 +23,7 @@
 				<span class="mui-tab-label">会员</span>
 			</router-link>
 			<router-link class="item" to="/shop">
-				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">{{statisti}}</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="item" to="/search">
@@ -37,8 +37,45 @@
 
 
 <script>
+
+
+
+import { mapGetters } from 'vuex'
 export default {
-    
+    data () {
+		return {
+			flag: true,
+		}
+	},
+
+	computed: {
+		...mapGetters(['statisti'])
+	},
+
+	methods: {
+		space () {
+			this.$router.go(-1)
+		}
+	},
+
+	watch: {
+		"$route.path": function (newVal, oldVal) {
+			
+			if (newVal === "/home") {
+				this.flag= false
+			}else {
+				this.flag=true
+			}
+		}
+	},
+
+	created () {
+		if (this.$route.path === "/home") {
+				this.flag= false
+			}else {
+				this.flag=true
+			}
+	}
 }
 </script>
 

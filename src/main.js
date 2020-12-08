@@ -13,6 +13,8 @@ import router from './router.js'
 
 
 
+//创建全局store
+import store from './store.js'
 
 import App from './components/App.vue'
 
@@ -25,5 +27,6 @@ const vm= new Vue({
 
     },
     render: c =>   c(App),
-    router
+    router,
+    store
 })

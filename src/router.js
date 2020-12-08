@@ -16,6 +16,8 @@ import PhotoList from './components/photos/PhotoLi.vue'
 import Photoinfo from './components/photos/Photoinfo.vue'
 import GoodList   from './components/good/GoodList.vue'
 import Goodinfo from './components/good/Goodinfo.vue'
+import Gooddetail from './components/good/Gooddetail.vue'
+import Goodimage from './components/good/Goodimage.vue'
 
 const router= new  VueRouter({
     routes:    [
@@ -29,7 +31,9 @@ const router= new  VueRouter({
         {   path: '/home/photolist', component: PhotoList},
         { path: '/home/photoinfo/:id', component: Photoinfo, props: true},
         {     path: '/home/goodlist', component: GoodList},
-        { path: '/home/goodinfo/:id', component: Goodinfo, props: true}
+        { path: '/home/goodinfo/:id', component: Goodinfo, props: true},
+        { path: '/home/goodsdesc/:id', component: Gooddetail, props: true},
+        { path: '/home/goodscomment/:id', component: Goodimage, props: true}
     ],
     linkActiveClass: 'mui-active'
 })

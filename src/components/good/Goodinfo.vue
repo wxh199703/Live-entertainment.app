@@ -1,7 +1,15 @@
 <template>
   <div class="goodinfo">
-      <div class="mui-card">
-				
+
+
+      <transition
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="after">
+            <div class="animation" v-show="flag"></div>
+      </transition>
+      
+      <div class="mui-card">				
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<swiper :lunbotu="photo" :imgname="'src'"></swiper>
@@ -18,13 +26,14 @@
                             <span style="margin-right: 10px;"><del>市场价：￥{{goodlist.market_price}}</del></span>
                             <span>销售价：￥{{goodlist.sell_price}}</span>
                         </p>
-                        
-                        <p>
-                            购买数量：<nobox :max="goodlist.stock_quantity"></nobox>
+                    
+                        <p style="display: flex;">
+                            <span style="line-height: 35px; height: 35px;">购买数量：</span>
+                            <nobox :max="goodlist.stock_quantity" @func="getSelectedCount"></nobox>
                         </p>
 
                         <mt-button type="primary" size="small">立即购买</mt-button>
-                        <mt-button type="danger" size="small">加入购物车</mt-button>
+                        <mt-button type="danger" size="small" @click="add">加入购物车</mt-button>
 					</div>
 				</div>
 				
@@ -40,8 +49,8 @@
 					</div>
 				</div>
 				<div class="mui-card-footer comment">
-                    <mt-button type="danger" size="large" plain>图文介绍</mt-button>
-                    <mt-button type="primary" size="large" plain>商品评论</mt-button>
+                    <mt-button type="danger" size="large" plain @click="detail">图文介绍</mt-button>
+                    <mt-button type="primary" size="large" plain @click="getcomment">商品评论</mt-button>
                 </div>
 			</div>
   </div>
@@ -56,8 +65,10 @@ import swiper from '../sub-components/Swiper.vue'
 export default {
     data () {
         return {
+            flag:false,
             photo: [],
-            goodlist: {}
+            goodlist: {},
+            selectedCount: 1
         }
     },
 
@@ -78,6 +89,60 @@ export default {
         async getGoodlist () {
             const {data} = await this.$http.get('/api/goods/getinfo/' + this.id)
             if (data.status === 0 )  return (this.goodlist=data.message[0])
+        },
+
+        detail () {
+            // console.log ('err')
+            this.$router.push("/home/goodsdesc/" + this.goodlist.id)
+        },
+
+        getcomment () {
+            this.$router.push("/home/goodscomment/" + this.goodlist.id)
+        },
+
+        add () {
+            this.flag=!this.flag;
+
+            this.$store.commit('add', { id: this.id, count: this.selectedCount, selected: true, price: this.goodlist.sell_price})
+        },
+
+        getSelectedCount(c) {
+      // 获取选择的商品的数量
+      // console.log("父组件中拿到了传递过来的count值为：" + c);
+      // 把 用户选择的最新的数量值，保存到 data 中，方便用户点击加入购物车按钮时候，把数量值同步到 徽标中
+            this.selectedCount = c;
+        },
+
+        beforeEnter (el) {
+            el.style.transform= "translate(0, 0)"
+        },
+
+        enter (el, done) {
+
+
+            
+
+            el.offsetWidth;
+
+            const ballPos=el.getBoundingClientRect()
+            
+            const badge=document.getElementById("badge").getBoundingClientRect()
+
+            const left=badge.left-ballPos.left;
+
+            const top=badge.top-ballPos.top
+
+            el.style.transform= "translate("+left+"px,"+top+"px)";
+            el.style.transition= "all 2s cubic-bezier(.46,-0.46,1,.53)";
+            
+
+
+
+            done ()
+        },
+
+        after (el) {
+            this.flag=!this.flag
         }
     },
 
@@ -118,5 +183,18 @@ export default {
         button + button {
             margin-top: 15px;
         }
+    }
+
+
+    .animation {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        position: absolute;
+        background: #000;
+        z-index: 50;
+        left: 152px;
+        top: 370px;
+        // transform: translate(87px, 250px);
     }
 </style>
