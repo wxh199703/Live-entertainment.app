@@ -156,7 +156,7 @@ module.exports= {
 
 
 
-            {   test: /\.(ttf|eot|svg|woff|woff2)/, use: 'url-loader'},
+            {   test: /\.ttf|eot|svg|woff|woff2$/, use: 'url-loader'},
 
 
 
@@ -171,7 +171,7 @@ module.exports= {
 
             {         test: /\.vue$/, use: 'vue-loader'},
 
-            {   test: /\.(ttf|eot|svg|woff|woff2)/, use: 'url-loader'},
+            // {   test: /\.(ttf|eot|svg|woff|woff2)/, use: 'url-loader'},
         ]
     }
 }

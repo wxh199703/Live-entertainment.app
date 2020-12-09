@@ -49,8 +49,8 @@ const store= new Vuex.Store ({
 
         updateGoodCount(state,  goods) {
             state.cart.some(item => {
-                if ( item.id === goods.id ) {
-                    item.count=goos.count
+                if ( item.id == goods.id ) {
+                    item.count=goods.count
                     return true
                 }
             })
